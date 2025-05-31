@@ -1,0 +1,37 @@
+package com.arya.api.domain.model;
+
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table(name = "ARYA_DRONE")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Drone {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String idDrone;
+
+    @ManyToOne
+    @JoinColumn(name = "id_hub")
+    private HubOperacional hub;
+
+    @Column(nullable = false, length = 100)
+    private String nome;
+
+    @Column(length = 50)
+    private String status;
+
+    @ManyToOne
+    @JoinColumn(name = "id_especificacao", nullable = false)
+    private Especificacao especificacao;
+
+    @Column(length = 255)
+    private String carregamento;
+
+}
