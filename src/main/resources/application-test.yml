@@ -15,3 +15,7 @@ spring:
       console:
         enabled: true
         path: /h2-console
+
+opencage:
+  api:
+    key: a87244001db4445183d0c3ad9b0ce9d2
