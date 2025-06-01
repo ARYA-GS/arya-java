@@ -20,4 +20,6 @@ public interface UsuarioService {
 
     void deletar(String usuarioId);
 
+    String validarLogin(String email, String senhaDigitada);
+
 }

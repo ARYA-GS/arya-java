@@ -5,8 +5,11 @@ import com.arya.api.adapter.repository.UsuarioRepository;
 import com.arya.api.domain.exception.EmailJaCadastradoException;
 import com.arya.api.domain.mapper.UsuarioMapper;
 import com.arya.api.domain.model.Usuario;
+import com.arya.api.infra.security.SecurityConfiguration;
+import com.arya.api.infra.security.TokenService;
 import com.arya.api.usecase.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +24,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private UsuarioMapper usuarioMapper;
+
+    @Autowired
+    private TokenService tokenService;
+
+    @Autowired
+    private SecurityConfiguration securityConfig;
 
     @Override
     public Usuario salvar(Usuario usuario) {
@@ -63,5 +72,18 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new RuntimeException("Usuário não encontrado com ID: " + id);
         }
         usuarioRepository.deleteById(id);
+    }
+
+    @Override
+    public String validarLogin(String email, String senhaDigitada) {
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com email: " + email));
+
+    if (securityConfig.passwordEncoder().matches(senhaDigitada, usuario.getSenha())) {
+        throw new BadCredentialsException("Senha incorreta");
+    }
+
+
+        return tokenService.gerarToken(usuario);
     }
 }
