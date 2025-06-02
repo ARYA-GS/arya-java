@@ -74,16 +74,16 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-    @Override
-    public String validarLogin(String email, String senhaDigitada) {
-        Usuario usuario = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com email: " + email));
-
-    if (securityConfig.passwordEncoder().matches(senhaDigitada, usuario.getSenha())) {
-        throw new BadCredentialsException("Senha incorreta");
-    }
-
-
-        return tokenService.gerarToken(usuario);
-    }
+//    @Override
+//    public String validarLogin(String email, String senhaDigitada) {
+//        Usuario usuario = usuarioRepository.findByEmail(email)
+//                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com email: " + email));
+//
+//    if (securityConfig.passwordEncoder().matches(senhaDigitada, usuario.getSenha())) {
+//        throw new BadCredentialsException("Senha incorreta");
+//    }
+//
+//
+//        return tokenService.gerarToken(usuario);
+//    }
 }
