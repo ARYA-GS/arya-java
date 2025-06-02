@@ -2,6 +2,7 @@ package com.arya.api.usecase.imlp;
 
 import com.arya.api.adapter.http.dto.request.OcorrenciaCadastroRequest;
 import com.arya.api.adapter.http.dto.response.OcorrenciaResposta;
+import com.arya.api.adapter.http.dto.response.ResumoOcorrenciaResposta;
 import com.arya.api.adapter.repository.AreaOperacaoRepository;
 import com.arya.api.adapter.repository.EnderecoRepository;
 import com.arya.api.adapter.repository.OcorrenciaRepository;
@@ -14,10 +15,13 @@ import com.arya.api.domain.model.Ocorrencia;
 import com.arya.api.domain.model.Usuario;
 import com.arya.api.usecase.service.OcorrenciaService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OcorrenciaServiceImpl implements OcorrenciaService {
@@ -42,6 +46,22 @@ public class OcorrenciaServiceImpl implements OcorrenciaService {
 
     @Autowired
     private GeocodingService geocodingService;
+
+
+    @Autowired
+    private ChatClient chatClient;
+
+
+    private static final String RESUMO_PROMPT_TEMPLATE = """
+            Por favor, gere um resumo conciso e informativo da seguinte descrição de ocorrência.
+            O resumo deve  capturar os pontos mais importantes.
+            inclua informações sobre o endereço e data, e foque no que aconteceu.
+
+            Descrição da Ocorrência:
+            {descricao_ocorrencia}
+
+            Resumo:
+            """;
 
     @Override
     public OcorrenciaResposta salvar(OcorrenciaCadastroRequest request) {
@@ -125,5 +145,31 @@ public class OcorrenciaServiceImpl implements OcorrenciaService {
                         Math.sin(dLon / 2) * Math.sin(dLon / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return R * c;
+    }
+
+
+    public ResumoOcorrenciaResposta gerarResumoOcorrencia(String ocorrenciaId) {
+
+        Ocorrencia ocorrencia = ocorrenciaRepository.findById(ocorrenciaId)
+                .orElseThrow(() -> new EntityNotFoundException("Ocorrência não encontrada com ID: " + ocorrenciaId));
+
+
+        String descricaoOriginal = ocorrencia.getDescricao();
+        if (descricaoOriginal == null || descricaoOriginal.trim().isEmpty()) {
+            return new ResumoOcorrenciaResposta(ocorrenciaId, "A ocorrência não possui descrição para resumir.");
+        }
+
+
+        PromptTemplate promptTemplate = new PromptTemplate(RESUMO_PROMPT_TEMPLATE);
+        var prompt = promptTemplate.create(Map.of("descricao_ocorrencia", descricaoOriginal));
+
+
+
+        String resumoGerado = chatClient.prompt(prompt)
+                .call()
+                .content();
+
+
+        return new ResumoOcorrenciaResposta(ocorrenciaId, resumoGerado);
     }
 }

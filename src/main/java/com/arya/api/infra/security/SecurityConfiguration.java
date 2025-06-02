@@ -29,10 +29,12 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/usuarios").permitAll()
-                        .requestMatchers("/usuarios").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+                                .anyRequest().permitAll()
+//                        .requestMatchers("/auth/login").permitAll()
+//                        .requestMatchers(HttpMethod.POST, "/usuarios").permitAll()
+//                        .requestMatchers("/usuarios").hasRole("ADMIN")
+//                        .anyRequest().authenticated()
+
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

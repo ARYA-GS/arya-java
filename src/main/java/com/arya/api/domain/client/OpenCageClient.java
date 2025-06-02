@@ -1,4 +1,4 @@
-package com.arya.api.adapter.repository;
+package com.arya.api.domain.client;
 
 import com.arya.api.adapter.http.dto.response.OpenCageResponse;
 import org.springframework.cloud.openfeign.FeignClient;
