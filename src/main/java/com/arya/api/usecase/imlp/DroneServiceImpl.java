@@ -8,7 +8,6 @@ import com.arya.api.adapter.repository.HubOperacionalRepository;
 import com.arya.api.domain.mapper.DroneMapper;
 import com.arya.api.domain.mapper.EspecificacaoMapper;
 import com.arya.api.domain.model.Drone;
-import com.arya.api.domain.model.Especificacao;
 import com.arya.api.domain.model.HubOperacional;
 import com.arya.api.usecase.service.DroneService;
 import jakarta.persistence.EntityNotFoundException;
@@ -41,10 +40,7 @@ public class DroneServiceImpl implements DroneService {
         HubOperacional hub = hubRepository.findById(request.getIdHub())
                 .orElseThrow(() -> new EntityNotFoundException("Hub operacional não encontrado"));
 
-        Especificacao especificacao = especificacaoMapper.converterParaModelo(request.getEspecificacao());
-        especificacao = especificacaoRepository.save(especificacao);
-
-        Drone drone = droneMapper.converterParaModelo(request, hub, especificacao);
+        Drone drone = droneMapper.converterParaModelo(request, hub);
         drone = droneRepository.save(drone);
 
         return droneMapper.converterParaResposta(drone);
@@ -73,14 +69,13 @@ public class DroneServiceImpl implements DroneService {
         HubOperacional hub = hubRepository.findById(request.getIdHub())
                 .orElseThrow(() -> new EntityNotFoundException("Hub operacional não encontrado"));
 
-        Especificacao novaEspecificacao = especificacaoMapper.converterParaModelo(request.getEspecificacao());
-        novaEspecificacao = especificacaoRepository.save(novaEspecificacao);
 
-        existente.setNome(request.getNome());
-        existente.setStatus(request.getStatus());
-        existente.setCarregamento(request.getCarregamento());
+
+        existente.setModelo(request.getModelo());
+        existente.setAlcanceKm(request.getAlcanceKm());
+        existente.setCargaKg(request.getCargaKg());
+        existente.setFuncoes(request.getFuncoes());
         existente.setHub(hub);
-        existente.setEspecificacao(novaEspecificacao);
 
         existente = droneRepository.save(existente);
 

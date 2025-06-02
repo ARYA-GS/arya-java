@@ -11,24 +11,26 @@ import org.springframework.stereotype.Component;
 @Component
 public class DroneMapper {
 
-    @Autowired
-    private EspecificacaoMapper especificacaoMapper;
+//    @Autowired
+//    private EspecificacaoMapper especificacaoMapper;
 
-    public Drone converterParaModelo(DroneCadastroRequest request, HubOperacional hub, Especificacao especificacao) {
+    public Drone converterParaModelo(DroneCadastroRequest request, HubOperacional hub) {
         return Drone.builder()
-                .nome(request.getNome())
-                .status(request.getStatus())
-                .carregamento(request.getCarregamento())
+                .modelo(request.getModelo())
+                .alcanceKm(request.getAlcanceKm())
+                .cargaKg(request.getCargaKg())
+                .funcoes(request.getFuncoes())
                 .hub(hub)
-                .especificacao(especificacao)
                 .build();
     }
 
     public DroneResposta converterParaResposta(Drone drone) {
         return DroneResposta.builder()
                 .idDrone(drone.getIdDrone())
-                .nome(drone.getNome())
-                .status(drone.getStatus())
+                .modelo(drone.getModelo())
+                .alcanceKm(drone.getAlcanceKm())
+                .cargaKg(drone.getCargaKg())
+                .funcoes(drone.getFuncoes())
                 .build();
     }
 }
