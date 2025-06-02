@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "ARYA_DRONE")
 @Data
@@ -24,16 +26,17 @@ public class Drone {
     private HubOperacional hub;
 
     @Column(nullable = false, length = 100)
-    private String nome;
+    private String modelo;
 
-    @Column(length = 50)
-    private String status;
+    @Column(nullable = false)
+    private Integer alcanceKm;
 
-    @ManyToOne
-    @JoinColumn(name = "id_especificacao", nullable = false)
-    private Especificacao especificacao;
+    @Column(nullable = false)
+    private Double cargaKg;
 
-    @Column(length = 255)
-    private String carregamento;
+    @ElementCollection
+    @CollectionTable(name = "ARYA_DRONE_FUNCOES", joinColumns = @JoinColumn(name = "id_drone"))
+    @Column(name = "funcao")
+    private List<String> funcoes;
 
 }

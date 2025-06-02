@@ -1,12 +1,15 @@
 package com.arya.api.usecase.imlp;
 
-import com.arya.api.adapter.http.dto.request.DroneModel;
+import com.arya.api.adapter.http.dto.response.DroneResposta;
 import com.arya.api.adapter.http.dto.response.SugestaoDroneResposta;
 import com.arya.api.domain.model.Ocorrencia;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
+import com.vladsch.flexmark.parser.Parser;
+import com.vladsch.flexmark.html.HtmlRenderer;
+import com.vladsch.flexmark.util.ast.Node;
 
 import java.util.List;
 
@@ -16,7 +19,7 @@ public class DroneInteligenciaService {
 
     private final ChatClient chatClient;
 
-    public SugestaoDroneResposta sugerirDroneIdeal(Ocorrencia ocorrencia, List<DroneModel> drones) {
+    public SugestaoDroneResposta sugerirDroneIdeal(Ocorrencia ocorrencia, List<DroneResposta> drones) {
         String promptBase = """
             Uma nova ocorrência foi registrada com os seguintes dados:
             - Tipo: {tipo}
@@ -36,9 +39,14 @@ public class DroneInteligenciaService {
                 .replace("{local}", ocorrencia.getEndereco().toString())
                 .replace("{drones}", new Gson().toJson(drones));
 
-        String resposta = chatClient.prompt(prompt).call().content();
+        String respostaMarkdown = chatClient.prompt(prompt).call().content();
 
-        return new SugestaoDroneResposta(ocorrencia.getIdOcorrencia(), resposta);
+        Parser parser = Parser.builder().build();
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        Node document = parser.parse(respostaMarkdown);
+        String respostaHtml = renderer.render(document);
+
+        return new SugestaoDroneResposta(ocorrencia.getIdOcorrencia(), respostaHtml);
     }
 }
 

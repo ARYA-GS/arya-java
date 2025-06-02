@@ -1,24 +1,26 @@
 package com.arya.api.adapter.http.dto.request;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class DroneCadastroRequest {
 
     @NotBlank
-    private String nome;
-
-    private String status;
-
-    private String carregamento;
-
-    @NotBlank
     private String idHub;
 
+    @NotBlank
+    private String modelo;
+
     @NotNull
-    @Valid
-    private EspecificacaoCadastroRequest especificacao;
+    private Integer alcanceKm;
+
+    @NotNull
+    private Double cargaKg;
+
+    @NotNull
+    private List<@NotBlank String> funcoes;
 }

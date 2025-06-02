@@ -1,10 +1,13 @@
 package com.arya.api.adapter.http;
 
+import com.arya.api.adapter.http.dto.request.DroneCadastroRequest;
 import com.arya.api.adapter.http.dto.request.DroneModel;
+import com.arya.api.adapter.http.dto.response.DroneResposta;
 import com.arya.api.adapter.http.dto.response.SugestaoDroneResposta;
 import com.arya.api.adapter.repository.OcorrenciaRepository;
 import com.arya.api.domain.model.Ocorrencia;
 import com.arya.api.usecase.imlp.DroneInteligenciaService;
+import com.arya.api.usecase.service.DroneService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,16 +21,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DroneInteligenciaController {
 
+    private final DroneService droneService;
+
     private final DroneInteligenciaService droneInteligenciaService;
     private final OcorrenciaRepository ocorrenciaRepository;
 
-    @PostMapping("/sugerir-drone/{idOcorrencia}")
-    public ResponseEntity<SugestaoDroneResposta> sugerirDrone(
-            @PathVariable String idOcorrencia,
-            @RequestBody List<DroneModel> drones) {
-
+    @GetMapping("/sugerir-drone/{idOcorrencia}")
+    public ResponseEntity<SugestaoDroneResposta> sugerirDrone(@PathVariable String idOcorrencia) {
         Ocorrencia ocorrencia = ocorrenciaRepository.findById(idOcorrencia)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ocorrência não encontrada"));
+
+        List<DroneResposta> drones = droneService.listarTodos();
 
         var sugestao = droneInteligenciaService.sugerirDroneIdeal(ocorrencia, drones);
 
