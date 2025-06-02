@@ -2,6 +2,7 @@ package com.arya.api.adapter.http;
 
 import com.arya.api.adapter.http.dto.request.OcorrenciaCadastroRequest;
 import com.arya.api.adapter.http.dto.response.OcorrenciaResposta;
+import com.arya.api.adapter.http.dto.response.ResumoOcorrenciaResposta;
 import com.arya.api.usecase.service.OcorrenciaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,11 @@ public class OcorrenciaController {
     public ResponseEntity<Void> deletar(@PathVariable String id) {
         ocorrenciaService.deletar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/resumo")
+    public ResponseEntity<ResumoOcorrenciaResposta> gerarResumoDaOcorrencia(@PathVariable String id) {
+        ResumoOcorrenciaResposta resumoResponse = ocorrenciaService.gerarResumoOcorrencia(id);
+        return ResponseEntity.ok(resumoResponse);
     }
 }

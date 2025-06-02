@@ -16,6 +16,33 @@ spring:
         enabled: true
         path: /h2-console
 
+
+  ai:
+    model:
+      chat: DeepSeek-R1
+    azure:
+      openai:
+        api-key: EO4QYkYu6S9TslvPXHA4fAmqwS1bdwYn74FS3ZonE02RBuN8qipnJQQJ99BEACfhMk5XJ3w3AAAAACOGjlDk
+        endpoint: https://mr553-mak5nrtw-swedencentral.cognitiveservices.azure.com/
+        chat:
+          options:
+            deployment-name: DeepSeek-R1
+            temperature: 0.7
+            api-version: 2025-05-12
+
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            connect-timeout: 5000
+            read-timeout: 5000
+
+openweather:
+  api-key: da377d5c2b5c5aff6622436623211cec
+
+
+
 api:
   security:
     jwt:
