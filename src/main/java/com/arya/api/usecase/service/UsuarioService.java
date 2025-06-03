@@ -1,5 +1,6 @@
 package com.arya.api.usecase.service;
 
+import com.arya.api.adapter.http.dto.request.UsuarioResetarSenhaRequest;
 import com.arya.api.adapter.http.dto.request.UsuarioTrocarSenhaRequest;
 import com.arya.api.domain.model.Usuario;
 
@@ -21,5 +22,8 @@ public interface UsuarioService {
     void deletar(String usuarioId);
 
     String validarLogin(String email, String senhaDigitada);
+
+    void resetarSenhaPorEmail(UsuarioResetarSenhaRequest request);
+
 
 }
