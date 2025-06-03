@@ -6,6 +6,7 @@ import com.arya.api.domain.model.Ocorrencia;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.html.HtmlRenderer;
@@ -17,7 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DroneInteligenciaService {
 
-    private final ChatClient chatClient;
+    @Autowired
+    private ChatClient chatClient;
 
     public SugestaoDroneResposta sugerirDroneIdeal(Ocorrencia ocorrencia, List<DroneResposta> drones) {
         String promptBase = """

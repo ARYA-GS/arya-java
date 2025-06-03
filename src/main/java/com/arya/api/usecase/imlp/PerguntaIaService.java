@@ -4,18 +4,20 @@ import com.arya.api.adapter.http.dto.request.PerguntaRequest;
 import com.arya.api.adapter.http.dto.response.RespostaNaturalIA;
 import com.arya.api.adapter.repository.OcorrenciaRepository;
 import com.arya.api.domain.model.Ocorrencia;
-import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class PerguntaIaService {
 
-    private final OcorrenciaRepository ocorrenciaRepository;
-    private final ChatClient chatClient;
+    @Autowired
+    private OcorrenciaRepository ocorrenciaRepository;
+
+    @Autowired
+    private ChatClient chatClient;
 
     public RespostaNaturalIA responder(PerguntaRequest request) {
         List<Ocorrencia> todas = ocorrenciaRepository.findAll();
