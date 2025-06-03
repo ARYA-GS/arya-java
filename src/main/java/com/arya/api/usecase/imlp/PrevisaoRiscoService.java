@@ -7,6 +7,7 @@ import com.arya.api.domain.model.Ocorrencia;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
+import com.arya.api.infra.notification.NotificationService;
 
 import java.util.HashSet;
 import java.util.List;
@@ -19,6 +20,7 @@ public class PrevisaoRiscoService {
     private final OcorrenciaRepository ocorrenciaRepository;
     private final OpenWeatherService openWeatherService;
     private final ChatClient chatClient;
+    private final NotificationService notificationService;
 
     public PrevisaoRiscoResposta preverRisco() {
         List<Ocorrencia> todas = ocorrenciaRepository.findAll();
@@ -61,6 +63,10 @@ public class PrevisaoRiscoService {
                 """.formatted(historico, climaAtual);
 
         String resposta = chatClient.prompt(prompt).call().content();
+
+        if (resposta.toLowerCase().contains("alto risco") || resposta.toLowerCase().contains("evacuação")) {
+            notificationService.enviarAlerta("Alto risco de calamidade detectado");
+        }
 
         return new PrevisaoRiscoResposta(resposta);
     }
