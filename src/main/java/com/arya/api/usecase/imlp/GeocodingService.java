@@ -2,7 +2,7 @@ package com.arya.api.usecase.imlp;
 
 import com.arya.api.adapter.http.dto.response.Geometry;
 import com.arya.api.adapter.http.dto.response.OpenCageResponse;
-import com.arya.api.domain.client.OpenCageClient;
+import com.arya.api.adapter.http.client.OpenCageClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

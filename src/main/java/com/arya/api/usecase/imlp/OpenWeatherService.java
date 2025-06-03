@@ -1,7 +1,7 @@
 package com.arya.api.usecase.imlp;
 
 import com.arya.api.adapter.http.dto.request.OpenWeatherResponse;
-import com.arya.api.domain.client.OpenWeatherClient;
+import com.arya.api.adapter.http.client.OpenWeatherClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
