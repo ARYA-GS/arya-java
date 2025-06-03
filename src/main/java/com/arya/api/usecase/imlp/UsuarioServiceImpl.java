@@ -1,5 +1,6 @@
 package com.arya.api.usecase.imlp;
 
+import com.arya.api.adapter.http.dto.request.UsuarioResetarSenhaRequest;
 import com.arya.api.adapter.http.dto.request.UsuarioTrocarSenhaRequest;
 import com.arya.api.adapter.repository.UsuarioRepository;
 import com.arya.api.domain.exception.EmailJaCadastradoException;
@@ -65,6 +66,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         return usuarioRepository.save(usuarioExistente);
     }
+
+    public void resetarSenhaPorEmail(UsuarioResetarSenhaRequest request) {
+        Usuario usuario = usuarioRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        usuario.setSenha(request.getNovaSenha());
+        usuarioRepository.save(usuario);
+    }
+
 
     @Override
     public void deletar(String id) {
