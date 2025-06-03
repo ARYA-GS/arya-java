@@ -1,14 +1,12 @@
 package com.arya.api.adapter.http;
 
-import com.arya.api.adapter.http.dto.request.DroneCadastroRequest;
-import com.arya.api.adapter.http.dto.request.DroneModel;
 import com.arya.api.adapter.http.dto.response.DroneResposta;
 import com.arya.api.adapter.http.dto.response.SugestaoDroneResposta;
 import com.arya.api.adapter.repository.OcorrenciaRepository;
 import com.arya.api.domain.model.Ocorrencia;
 import com.arya.api.usecase.imlp.DroneInteligenciaService;
 import com.arya.api.usecase.service.DroneService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +16,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ia")
-@RequiredArgsConstructor
 public class DroneInteligenciaController {
 
-    private final DroneService droneService;
+    @Autowired
+    private DroneService droneService;
 
-    private final DroneInteligenciaService droneInteligenciaService;
-    private final OcorrenciaRepository ocorrenciaRepository;
+    @Autowired
+    private DroneInteligenciaService droneInteligenciaService;
+
+    @Autowired
+    private OcorrenciaRepository ocorrenciaRepository;
 
     @GetMapping("/sugerir-drone/{idOcorrencia}")
     public ResponseEntity<SugestaoDroneResposta> sugerirDrone(@PathVariable String idOcorrencia) {
