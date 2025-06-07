@@ -38,6 +38,12 @@ spring:
             connect-timeout: 5000
             read-timeout: 5000
 
+  rabbitmq:
+    host: localhost
+    listener:
+      simple:
+        auto-startup: false
+
 openweather:
   api-key: da377d5c2b5c5aff6622436623211cec
 
