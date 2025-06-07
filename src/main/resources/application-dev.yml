@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:oracle:thin:@oracle.fiap.com.br:1521:orcl
-    username: "RM553621"
-    password: "051102"
+    username: "RM553215"
+    password: "160701"
     driver-class-name: oracle.jdbc.OracleDriver
     hikari:
       maximum-pool-size: 2
