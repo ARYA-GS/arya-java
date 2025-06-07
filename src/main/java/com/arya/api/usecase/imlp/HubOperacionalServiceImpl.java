@@ -8,6 +8,7 @@ import com.arya.api.domain.mapper.EnderecoMapper;
 import com.arya.api.domain.mapper.HubOperacionalMapper;
 import com.arya.api.domain.model.Endereco;
 import com.arya.api.domain.model.HubOperacional;
+import com.arya.api.infra.messaging.HubProducer;
 import com.arya.api.usecase.service.HubOperacionalService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class HubOperacionalServiceImpl implements HubOperacionalService {
 
     @Autowired
     private  GeocodingService geocodingService;
+
+    @Autowired
+    private HubProducer hubProducer;
 
     @Override
     public HubOperacionalResposta salvar(HubOperacionalCadastroRequest request) {
@@ -65,6 +69,8 @@ public class HubOperacionalServiceImpl implements HubOperacionalService {
 
         HubOperacional hub = hubMapper.converterParaModelo(request, endereco);
         hub = hubRepository.save(hub);
+
+        hubProducer.send(hub);
 
         return hubMapper.converterParaResposta(hub);
     }

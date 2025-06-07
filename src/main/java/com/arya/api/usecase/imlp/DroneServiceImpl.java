@@ -9,6 +9,7 @@ import com.arya.api.domain.mapper.DroneMapper;
 import com.arya.api.domain.mapper.EspecificacaoMapper;
 import com.arya.api.domain.model.Drone;
 import com.arya.api.domain.model.HubOperacional;
+import com.arya.api.infra.messaging.DroneProducer;
 import com.arya.api.usecase.service.DroneService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ public class DroneServiceImpl implements DroneService {
     @Autowired
     private EspecificacaoMapper especificacaoMapper;
 
+    @Autowired
+    private DroneProducer droneProducer;
+
     @Override
     public DroneResposta salvar(DroneCadastroRequest request) {
         HubOperacional hub = hubRepository.findById(request.getIdHub())
@@ -42,6 +46,8 @@ public class DroneServiceImpl implements DroneService {
 
         Drone drone = droneMapper.converterParaModelo(request, hub);
         drone = droneRepository.save(drone);
+
+        droneProducer.send(drone);
 
         return droneMapper.converterParaResposta(drone);
     }

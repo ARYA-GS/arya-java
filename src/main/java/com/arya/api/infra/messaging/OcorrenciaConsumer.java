@@ -6,10 +6,11 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class MessageConsumer {
+public class OcorrenciaConsumer {
 
-    @RabbitListener(queues = RabbitMQConfig.DRONE_QUEUE)
-    public void receive(String message) {
-        log.info("Received default message: {}", message);
+    @RabbitListener(queues = RabbitMQConfig.OCORRENCIA_QUEUE)
+    public void receive(Object message) {
+        log.info("Ocorrencia queue received: {}", message);
     }
 }
+

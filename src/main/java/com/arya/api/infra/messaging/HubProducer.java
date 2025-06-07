@@ -6,15 +6,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class MessageProducer {
+public class HubProducer {
 
     private final AmqpTemplate amqpTemplate;
 
-    public void send(String message) {
+    public void send(Object message) {
         amqpTemplate.convertAndSend(
-                RabbitMQConfig.DRONE_EXCHANGE,
-                RabbitMQConfig.DRONE_ROUTING_KEY,
+                RabbitMQConfig.HUB_EXCHANGE,
+                RabbitMQConfig.HUB_ROUTING_KEY,
                 message
         );
     }
 }
+
