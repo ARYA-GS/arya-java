@@ -13,6 +13,7 @@ import com.arya.api.domain.model.AreaOperacao;
 import com.arya.api.domain.model.Endereco;
 import com.arya.api.domain.model.Ocorrencia;
 import com.arya.api.domain.model.Usuario;
+import com.arya.api.infra.messaging.OcorrenciaProducer;
 import com.arya.api.usecase.service.OcorrenciaService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.ai.chat.client.ChatClient;
@@ -50,6 +51,9 @@ public class OcorrenciaServiceImpl implements OcorrenciaService {
 
     @Autowired
     private ChatClient chatClient;
+
+    @Autowired
+    private OcorrenciaProducer ocorrenciaProducer;
 
 
     private static final String RESUMO_PROMPT_TEMPLATE = """
@@ -105,6 +109,8 @@ public class OcorrenciaServiceImpl implements OcorrenciaService {
 
         Ocorrencia ocorrencia = ocorrenciaMapper.converterParaModelo(request, usuario, endereco, area);
         ocorrencia = ocorrenciaRepository.save(ocorrencia);
+
+        ocorrenciaProducer.send(ocorrencia);
 
         return ocorrenciaMapper.converterParaResposta(ocorrencia);
     }
