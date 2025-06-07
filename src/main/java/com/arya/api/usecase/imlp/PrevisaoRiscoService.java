@@ -49,13 +49,13 @@ public class PrevisaoRiscoService {
         }
 
         String prompt = """
-                Com base no histórico de ocorrências e nas condições climáticas atuais, identifique:
+                Com base no histórico de ocorrências e nas condições climáticas atuais, responda de forma objetiva e resumida:
                 
-                1. Regiões com maior risco de uma nova calamidade.
-                2. O tipo de calamidade mais provável em cada local.
-                3. Ações preventivas recomendadas para cada região (ex: alerta preventivo, evacuação, envio de drone, monitoramento via sensores).
+                1. Regiões com maior risco de nova calamidade.
+                2. Tipo mais provável de calamidade por região.
+                3. Ação preventiva principal recomendada por região.
                 
-                Se não houver informações suficientes para prever, informe isso com clareza.
+                Se não houver dados suficientes, informe isso claramente. Evite respostas longas ou detalhadas.
                 
                 %s
                 

@@ -39,7 +39,8 @@ spring:
             read-timeout: 5000
 
   rabbitmq:
-    host: localhost
+    host: ${SPRING_RABBITMQ_HOST:localhost}
+    port: ${SPRING_RABBITMQ_PORT:5672}
     listener:
       simple:
         auto-startup: false
