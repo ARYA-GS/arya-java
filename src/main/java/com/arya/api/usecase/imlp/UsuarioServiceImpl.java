@@ -32,12 +32,16 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
     private SecurityConfiguration securityConfig;
 
+
     @Override
     public Usuario salvar(Usuario usuario) {
         usuarioRepository.findByEmail(usuario.getEmail())
                 .ifPresent(u -> {
                     throw new EmailJaCadastradoException(usuario.getEmail());
                 });
+
+        String senhaCriptografada = securityConfig.passwordEncoder().encode(usuario.getSenha());
+        usuario.setSenha(senhaCriptografada);
 
         return usuarioRepository.save(usuario);
     }
@@ -89,7 +93,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado com email: " + email));
 
-    if (securityConfig.passwordEncoder().matches(senhaDigitada, usuario.getSenha())) {
+    if (!securityConfig.passwordEncoder().matches(senhaDigitada, usuario.getSenha())) {
         throw new BadCredentialsException("Senha incorreta");
     }
 

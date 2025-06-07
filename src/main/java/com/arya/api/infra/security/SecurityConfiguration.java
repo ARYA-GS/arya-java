@@ -22,7 +22,6 @@ public class SecurityConfiguration {
     @Autowired
     private SecurityFilter securityFilter;
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -32,7 +31,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.PATCH, "/usuarios/").permitAll()
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/usuarios").permitAll()
-                        .requestMatchers("/usuarios").hasRole("ADMIN")
+                        .requestMatchers("/usuarios/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
 
                 )
