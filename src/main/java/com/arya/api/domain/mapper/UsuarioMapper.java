@@ -5,6 +5,7 @@ import com.arya.api.adapter.http.dto.request.UsuarioTrocarSenhaRequest;
 import com.arya.api.adapter.http.dto.response.UsuarioResposta;
 import com.arya.api.domain.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,6 +13,9 @@ public class UsuarioMapper {
 
     @Autowired
     private UsuarioValidator usuarioValidator;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public void trocarSenha(Usuario usuarioExistente, UsuarioTrocarSenhaRequest request) {
         String novaSenhaValida = usuarioValidator.validarETrocarSenha(
@@ -42,11 +46,7 @@ public class UsuarioMapper {
     }
 
     public void atualizarSenha(Usuario usuarioExistente, UsuarioTrocarSenhaRequest request) {
-        String novaSenhaValida = usuarioValidator.validarETrocarSenha(
-                usuarioExistente.getSenha(),
-                request.getSenhaAtual(),
-                request.getNovaSenha()
-        );
-        usuarioExistente.setSenha(novaSenhaValida);
+        String novaSenhaCriptografada = passwordEncoder.encode(request.getNovaSenha());
+        usuarioExistente.setSenha(novaSenhaCriptografada);
     }
 }

@@ -19,6 +19,7 @@ public class Ocorrencia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "ID_OCORRENCIA")
     private String idOcorrencia;
 
     @Column(name = "tipo_ocorrencia", nullable = false, length = 100)
@@ -31,6 +32,7 @@ public class Ocorrencia {
     private OffsetDateTime dataOcorrencia;
 
     @Lob
+    @Column(columnDefinition = "CLOB")
     private String descricao;
 
     @ManyToOne

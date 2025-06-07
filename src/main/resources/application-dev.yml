@@ -1,0 +1,56 @@
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@oracle.fiap.com.br:1521:orcl
+    username: "RM553215"
+    password: "160701"
+    driver-class-name: oracle.jdbc.OracleDriver
+    hikari:
+      maximum-pool-size: 2
+    jpa:
+      hibernate:
+        ddl-auto: create
+
+
+
+  ai:
+    model:
+      chat: DeepSeek-R1
+    azure:
+      openai:
+        api-key: EO4QYkYu6S9TslvPXHA4fAmqwS1bdwYn74FS3ZonE02RBuN8qipnJQQJ99BEACfhMk5XJ3w3AAAAACOGjlDk
+        endpoint: https://mr553-mak5nrtw-swedencentral.cognitiveservices.azure.com/
+        chat:
+          options:
+            deployment-name: DeepSeek-R1
+            temperature: 0.7
+            api-version: 2025-05-12
+
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            connect-timeout: 5000
+            read-timeout: 5000
+
+  rabbitmq:
+    host: ${SPRING_RABBITMQ_HOST:localhost}
+    port: ${SPRING_RABBITMQ_PORT:5672}
+    listener:
+      simple:
+        auto-startup: false
+
+openweather:
+  api-key: da377d5c2b5c5aff6622436623211cec
+
+
+
+api:
+  security:
+    jwt:
+      secret: your_secret_key_here
+
+
+opencage:
+  api:
+    key: a87244001db4445183d0c3ad9b0ce9d2

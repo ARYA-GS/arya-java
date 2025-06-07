@@ -31,15 +31,13 @@ public class PerguntaIaService {
         }
 
         String prompt = """
-                Com base nas ocorrências listadas abaixo, responda de forma clara, precisa e em linguagem acessível à seguinte pergunta enviada por um cidadão:
+                Com base nas ocorrências listadas abaixo, responda de forma clara, objetiva e voltada para a gestão dos incidentes à seguinte pergunta:
                 
                 Pergunta: %s
                 
-                Além disso, se a pergunta estiver relacionada a calamidades (como enchentes, deslizamentos ou incêndios), inclua:
-                - Dicas práticas de primeiros socorros
-                - Recomendações preventivas específicas para o tipo de situação mencionada
+                Use os dados abaixo como base para identificar padrões, estatísticas e apoiar a tomada de decisão (ex: quantidade de incidentes, regiões mais afetadas, tipos mais comuns).
                 
-                Use as ocorrências abaixo como base de contexto para responder:
+                Evite explicações longas ou genéricas. Foque em dados diretos e úteis para análise operacional.
                 
                 %s
                 """.formatted(request.getPergunta(), contexto);

@@ -24,6 +24,8 @@ public class TokenService {
             String token = com.auth0.jwt.JWT.create()
                     .withIssuer("arya-api")
                     .withSubject(usuario.getEmail())
+                    .withClaim("id", usuario.getUsuarioId())
+                    .withClaim("nome", usuario.getNome())
                     .withExpiresAt(getExpiration())
                     .sign(algorithm);
             return token;

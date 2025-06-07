@@ -22,19 +22,17 @@ public class SecurityConfiguration {
     @Autowired
     private SecurityFilter securityFilter;
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                                .anyRequest().permitAll()
-//                                .requestMatchers(HttpMethod.PATCH, "/usuarios/").permitAll()
-//                        .requestMatchers("/auth/login").permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/usuarios").permitAll()
-//                        .requestMatchers("/usuarios").hasRole("ADMIN")
-//                        .anyRequest().authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/usuarios/").permitAll()
+                        .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/usuarios").permitAll()
+                        .requestMatchers("/usuarios/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
 
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
