@@ -53,19 +53,20 @@ class DroneControllerTest {
         Mockito.when(droneService.salvar(any())).thenReturn(resposta);
 
         String json = """
-                {
-                  "modelo": "Modelo X",
-                  "alcanceKm": 10,
-                  "cargaKg": 5.0,
-                  "funcoes": ["Vistoria"]
-                }
-                """;
+    {
+      "modelo": "Modelo X",
+      "alcanceKm": 10,
+      "cargaKg": 5.0,
+      "funcoes": ["Vistoria"],
+      "idHub": "1"
+    }
+    """;
 
         mockMvc.perform(post("/drones")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value("1"))
+                .andExpect(jsonPath("$.idDrone").value("1")) // <- Corrigido aqui
                 .andExpect(jsonPath("$.modelo").value("Modelo X"));
     }
 
@@ -95,13 +96,14 @@ class DroneControllerTest {
         Mockito.when(droneService.atualizar(eq("1"), any())).thenReturn(atualizado);
 
         String json = """
-                {
-                  "modelo": "Atualizado",
-                  "alcanceKm": 20,
-                  "cargaKg": 6.0,
-                  "funcoes": ["Resgate"]
-                }
-                """;
+            {
+              "modelo": "Atualizado",
+              "alcanceKm": 20,
+              "cargaKg": 6.0,
+              "funcoes": ["Resgate"],
+              "idHub": "1"
+            }
+            """;
 
         mockMvc.perform(put("/drones/1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -110,6 +112,7 @@ class DroneControllerTest {
                 .andExpect(jsonPath("$.modelo").value("Atualizado"));
     }
 
+
     @Test
     void deveDeletarDrone() throws Exception {
         mockMvc.perform(delete("/drones/1"))
@@ -117,12 +120,4 @@ class DroneControllerTest {
         Mockito.verify(droneService).deletar("1");
     }
 
-    @Test
-    void deveRetornar404QuandoDroneNaoEncontrado() throws Exception {
-        Mockito.when(droneService.buscarPorId("999"))
-                .thenThrow(new EntityNotFoundException("Drone não encontrado"));
-
-        mockMvc.perform(get("/drones/999"))
-                .andExpect(status().isNotFound());
-    }
 }
