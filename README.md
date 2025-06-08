@@ -11,6 +11,15 @@
 
 Link do Video [video](https://youtu.be/8YhITEJctlA)
 
+## 🔗 Collection Postman
+
+Você pode acessar e testar os endpoints da API utilizando a collection do Postman abaixo:
+
+👉 [Clique aqui para abrir a Collection ARYA no Postman](https://prevdent.postman.co/workspace/arya~d8c7cb5c-99e2-4d00-99b7-050f91256ee3/collection/36751202-176f84ca-ad47-4776-ac05-08a9d0f33f69?action=share&source=collection_link&creator=36751202)
+
+Caso prefira importar manualmente, o arquivo `ARYA.postman_collection.json` também está disponível neste repositório.
+
+
 **Arya** é uma plataforma robusta, alimentada por IA, projetada para o gerenciamento eficiente de desastres naturais e outros incidentes de grande escala. Ela utiliza uma frota de drones, análise inteligente de dados e comunicação em tempo real para fornecer suporte crítico às equipes operacionais.
 
 A plataforma permite o registro de hubs operacionais, drones e usuários. Ela pode rastrear incidentes, sugerir o drone mais adequado para uma missão específica usando IA e fornecer previsões de risco com base em dados históricos e nas condições climáticas atuais.
