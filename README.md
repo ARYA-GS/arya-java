@@ -15,7 +15,7 @@ Link do Video [video](https://youtu.be/8YhITEJctlA)
 
 Você pode acessar e testar os endpoints da API utilizando a collection do Postman abaixo:
 
-👉 [Clique aqui para abrir a Collection ARYA no Postman](https://prevdent.postman.co/workspace/arya~d8c7cb5c-99e2-4d00-99b7-050f91256ee3/collection/36751202-176f84ca-ad47-4776-ac05-08a9d0f33f69?action=share&source=collection_link&creator=36751202)
+[Clique aqui para abrir a Collection ARYA no Postman](https://prevdent.postman.co/workspace/arya~d8c7cb5c-99e2-4d00-99b7-050f91256ee3/collection/36751202-176f84ca-ad47-4776-ac05-08a9d0f33f69?action=share&source=collection_link&creator=36751202)
 
 Caso prefira importar manualmente, o arquivo `ARYA.postman_collection.json` também está disponível neste repositório.
 
