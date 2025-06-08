@@ -1,5 +1,16 @@
 # Arya - Plataforma de Gestão de Desastres
 
+# Aluno	RM
+
+#### Keven Ike Pereira da Silva	553215
+
+#### Vitor Cruz dos Santos  553621
+
+#### José Ribeiro dos Santos Neto 553844
+
+
+Link do Video [video](https://youtu.be/8YhITEJctlA)
+
 **Arya** é uma plataforma robusta, alimentada por IA, projetada para o gerenciamento eficiente de desastres naturais e outros incidentes de grande escala. Ela utiliza uma frota de drones, análise inteligente de dados e comunicação em tempo real para fornecer suporte crítico às equipes operacionais.
 
 A plataforma permite o registro de hubs operacionais, drones e usuários. Ela pode rastrear incidentes, sugerir o drone mais adequado para uma missão específica usando IA e fornecer previsões de risco com base em dados históricos e nas condições climáticas atuais.
